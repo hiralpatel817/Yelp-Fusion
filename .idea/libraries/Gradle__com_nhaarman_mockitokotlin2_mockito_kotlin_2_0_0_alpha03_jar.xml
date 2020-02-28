@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-alpha03@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.nhaarman.mockitokotlin2/mockito-kotlin/2.0.0-alpha03/99943ccc6ad90f36a9fe7b05ecf0bba1d5908ae7/mockito-kotlin-2.0.0-alpha03.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.nhaarman.mockitokotlin2/mockito-kotlin/2.0.0-alpha03/891d9a5f495c2190b56f997e31af3cb66a293641/mockito-kotlin-2.0.0-alpha03-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.nhaarman.mockitokotlin2/mockito-kotlin/2.0.0-alpha03/5a67f09c3975275fe290dd48dc90be3444da354b/mockito-kotlin-2.0.0-alpha03-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
