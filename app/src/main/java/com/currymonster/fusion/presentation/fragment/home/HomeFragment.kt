@@ -24,6 +24,16 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     private lateinit var groupAdapter: GroupAdapter<ViewHolder>
     private lateinit var businessesSection: Section
+    private var paginationCallbacks: PaginationListener.Callbacks =
+        object : PaginationListener.Callbacks {
+            override fun onLoadMore() {
+                viewModel.onLoadMore()
+            }
+
+            override fun isLoading() = viewModel.isLoading()
+
+            override fun hasLoadedAllItems() = viewModel.hasLoadedAll()
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidSupportInjection.inject(this)
@@ -54,7 +64,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             addOnScrollListener(
                 PaginationListener(
                     layoutManager = layoutManager as LinearLayoutManager,
-                    callbacks = viewModel.paginationCallbacks
+                    callbacks = paginationCallbacks
                 )
             )
         }

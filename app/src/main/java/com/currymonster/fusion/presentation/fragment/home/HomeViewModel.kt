@@ -12,7 +12,6 @@ import com.currymonster.fusion.interceptors.FusionRxJava2CallAdapterFactory
 import com.currymonster.fusion.presentation.base.BaseMutableLiveData
 import com.currymonster.fusion.presentation.base.BaseViewModel
 import com.currymonster.fusion.presentation.common.Dialogs
-import com.currymonster.fusion.presentation.common.PaginationListener
 import com.currymonster.fusion.transformer.Async
 import com.currymonster.fusion.usecase.ReviewsUseCase
 import com.currymonster.fusion.usecase.SearchUseCase
@@ -34,23 +33,18 @@ class HomeViewModel @Inject constructor(
     val totalState = Transformations.map(_state) { state -> state.total }.distinct()
     val businessesState = Transformations.map(_state) { state -> state.businesses }.distinct()
 
-    var paginationCallbacks: PaginationListener.Callbacks = object : PaginationListener.Callbacks {
-        override fun onLoadMore() {
-            fetchBusinesses()
-        }
-
-        override fun isLoading(): Boolean {
-            return loadingInProgress
-        }
-
-        override fun hasLoadedAllItems(): Boolean {
-            return (_state.value.businesses.isNotEmpty() && _state.value.businesses.size == _state.value.total)
-        }
-    }
-
     init {
         fetchBusinesses()
     }
+
+    fun onLoadMore() {
+        fetchBusinesses()
+    }
+
+    fun isLoading() = loadingInProgress
+
+    fun hasLoadedAll() =
+        (_state.value.businesses.isNotEmpty() && _state.value.businesses.size == _state.value.total)
 
     fun openYelp(business: Business) {
         startActivity(
