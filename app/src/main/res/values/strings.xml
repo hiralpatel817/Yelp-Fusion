@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Yelp Fusion</string>
+
+    // General strings
+    <string name="loading">Loading</string>
+    <string name="next">Next</string>
+
+
+    // Errors
+    <string name="error_generic_title">Oh no!</string>
+    <string name="error_generic_acknowledge">Okay</string>
+    <string name="error_generic_retry">Retry</string>
+
+    <string name="error_network_generic">We can\'t seem to connect to our server. Please try again later.</string>
+
+    // Version Support Error
+    <string name="error_version_not_supported">Please update your app to the latest version.</string>
+    <string name="error_version_not_supported_close">Close</string>
+    <string name="error_version_not_supported_update">Update</string>
+
+    // Home
+    <string name="business_total">Total: %s</string>
+
+</resources>

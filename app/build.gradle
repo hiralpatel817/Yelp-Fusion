@@ -1,0 +1,182 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+
+androidExtensions {
+    experimental = true
+}
+
+android {
+    compileSdkVersion rootProject.ext.compile_sdk
+    buildToolsVersion rootProject.ext.build_tools_version
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.min_sdk
+        targetSdkVersion rootProject.ext.target_sdk
+        versionCode rootProject.ext.version_code
+        versionName rootProject.ext.version_name
+        applicationId "com.currymonster.fusion"
+
+        multiDexEnabled true
+
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "arm64-v8a"
+        }
+
+        // Client Side Feature Flags
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("$projectDir/../debug.keystore")
+            storePassword "android"
+            keyAlias "debug"
+            keyPassword "android"
+        }
+
+        release {
+            storeFile file("$projectDir/../app/src/main/keystore/release.keystore")
+            storePassword "android"
+            keyAlias "release"
+            keyPassword "discotechsarefun"
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            applicationIdSuffix ".dev"
+            signingConfig signingConfigs.debug
+
+            // Override Client Side Feature Flags
+        }
+
+        qa {
+            debuggable true
+            applicationIdSuffix ".qa"
+            signingConfig signingConfigs.debug
+
+            // Override Client Side Feature Flags
+        }
+
+        staging {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            applicationIdSuffix ".staging"
+            signingConfig signingConfigs.release
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    // Local Dependencies
+    implementation project(':data')
+    implementation project(':domain')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    // AndroidX
+    implementation "androidx.appcompat:appcompat:$androidx_version"
+    implementation "androidx.core:core-ktx:$androidx_version"
+    implementation "androidx.appcompat:appcompat:$androidx_version"
+
+    // Material
+    implementation "com.google.android.material:material:$material_version"
+
+    // Layouts
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    implementation "androidx.cardview:cardview:$card_layout_version"
+
+    // UI
+    implementation "androidx.fragment:fragment-ktx:$ui_version"
+    implementation "androidx.activity:activity-ktx:$ui_version"
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // Dagger 2
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+
+    // Rx
+    implementation "io.reactivex.rxjava2:rxkotlin:$rx_kotlin_version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
+    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rx_binding_version"
+    implementation "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$rx_binding_version"
+    implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:$rx_binding_version"
+    implementation "com.f2prateek.rx.preferences2:rx-preferences:$rx_preferences_version"
+    implementation "com.patloew.rxlocation:rxlocation:$rx_location_version"
+
+    // Life Cycle
+    implementation "androidx.lifecycle:lifecycle-extensions:$life_cycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$life_cycle_version"
+    testImplementation "androidx.arch.core:core-testing:$life_cycle_version"
+
+    // Networking
+    implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
+    implementation("com.squareup.okhttp3:logging-interceptor:$okhttp_version")
+
+    // KTX
+    implementation "androidx.core:core-ktx:$ktx_version"
+
+    // Biometrics
+    implementation "androidx.biometric:biometric:$androidx_biometric_version"
+
+    // GSON JSON Parsing
+    implementation "com.google.code.gson:gson:$gson_version"
+
+    // Material Dialogs
+    implementation "com.afollestad.material-dialogs:core:$material_dialog_version"
+
+    //Glide
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+
+    // Permissions assistance
+    implementation("com.github.tbruyelle:rxpermissions:$rx_permission_version") {
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+    }
+
+    // Preference Util
+    implementation "com.android.support:preference-v7:$preference_support_version"
+    implementation "com.android.support:preference-v14:$preference_support_version"
+
+    // RecyclerView Adaptors
+    implementation "com.xwray:groupie:$groupie_version"
+    implementation "com.xwray:groupie-kotlin-android-extensions:$groupie_version"
+
+    // Glide Image Processing
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+
+    // Pagination
+    implementation "com.github.markomilos:paginate:$pagination_version"
+}

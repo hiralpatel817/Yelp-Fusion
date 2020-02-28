@@ -1,0 +1,23 @@
+package {{PACKAGE}}.{{COMPONENT}}
+
+import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.appcompat.widget.Toolbar
+import {{BASEPACKAGE}}.R
+import {{BASEPACKAGE}}.presentation.base.BaseActivity
+import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_{{SNAKECOMPONENTPATH}}.*
+
+class {{VIEW}} : BaseActivity() {
+
+    private val viewModel: {{VIEWMODEL}} by viewModels { factory }
+
+    override val toolbar: Toolbar? get() = tbToolbar
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_{{SNAKECOMPONENTPATH}})
+        setSupportActionBar(toolbar)
+    }
+}

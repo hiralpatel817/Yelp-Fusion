@@ -1,0 +1,37 @@
+package {{PACKAGE}}.{{COMPONENT}}
+
+import android.os.Parcelable
+import {{BASEPACKAGE}}.common.ProgressState
+import {{BASEPACKAGE}}.common.Reducer
+import kotlinx.android.parcel.Parcelize
+
+sealed class Event {
+}
+
+sealed class Action {
+}
+
+object ProgressStateReducer : Reducer<ProgressState> {
+    override fun reduce(state: ProgressState, action: Any): ProgressState {
+        return when (action) {
+            else ->
+                state
+        }
+    }
+}
+
+@Parcelize
+data class {{VIEWSTATE}}(
+    val progressState: ProgressState = ProgressState()
+) : Parcelable {
+    fun next(action: Action): {{VIEWSTATE}} {
+        return copy(
+            progressState = ProgressStateReducer.reduce(progressState, action)
+        ).let {
+            when (action) {
+                else ->
+                    it
+            }
+        }
+    }
+}

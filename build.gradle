@@ -1,0 +1,70 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext {
+        kotlin_version = '1.3.61'
+        build_tools_version = '29.0.2'
+        glide_version = '4.11.0'
+        gradle_version = '3.6.0'
+        groupie_version = '2.3.0'
+        nav_version = '2.0.0'
+        compile_sdk = 28
+        min_sdk = 21
+        target_sdk = 28
+        version_code = 1
+        version_name = '1.0.0'
+    }
+
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:$gradle_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url "https://maven.google.com" }
+        maven { url 'https://jitpack.io' }
+    }
+
+    project.ext {
+        androidx_version = "1.1.0"
+        androidx_biometric_version = "1.0.1"
+        card_layout_version = "1.0.0"
+        constraint_layout_version = "1.1.3"
+        dagger_version = "2.22.1"
+        glide_version = "4.9.0"
+        gson_version = "2.8.2"
+        ktx_version = "1.1.0"
+        life_cycle_version = "2.1.0"
+        material_dialog_version = "0.9.6.0"
+        material_version = "1.2.0-alpha03"
+        nav_version = "2.1.0"
+        okhttp_version = "3.13.1"
+        pagination_version = "0.5.1"
+        preference_support_version = "28.0.0"
+        retrofit_version = "2.6.0"
+        room_version = "2.2.1"
+        rx_android_version = "2.1.1"
+        rx_binding_version = "2.1.1"
+        rx_java_version = "2.2.8"
+        rx_kotlin_version = "2.3.0"
+        rx_permission_version = "0.10.2"
+        rx_preferences_version = "2.0.0"
+        rx_location_version = "1.0.5"
+        ui_version = "1.1.0-rc01"
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

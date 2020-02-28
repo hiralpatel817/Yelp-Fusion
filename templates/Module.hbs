@@ -1,0 +1,22 @@
+package {{PACKAGE}}.{{COMPONENT}}.module
+
+import androidx.lifecycle.ViewModel
+import {{BASEPACKAGE}}.presentation.base.viewmodelfactory.ViewModelKey
+import {{PACKAGE}}.{{COMPONENT}}.{{VIEW}}
+import {{PACKAGE}}.{{COMPONENT}}.{{VIEWMODEL}}
+import dagger.Binds
+import dagger.Module
+import dagger.android.ContributesAndroidInjector
+import dagger.multibindings.IntoMap
+
+@Module
+internal abstract class Module {
+    @Scope
+    @ContributesAndroidInjector
+    abstract fun provideInjector(): {{VIEW}}
+
+    @Binds
+    @IntoMap
+    @ViewModelKey({{VIEWMODEL}}::class)
+    internal abstract fun bindViewModel(viewModel: {{VIEWMODEL}}): ViewModel
+}
