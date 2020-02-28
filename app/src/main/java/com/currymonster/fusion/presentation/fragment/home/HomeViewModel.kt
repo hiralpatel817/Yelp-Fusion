@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.Transformations
+import com.currymonster.fusion.R
 import com.currymonster.fusion.data.Business
 import com.currymonster.fusion.data.Review
 import com.currymonster.fusion.extensions.distinct
@@ -27,13 +28,13 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val _state = BaseMutableLiveData(HomeState())
-    private var loadingInProgress = false
 
     val progressState = Transformations.map(_state) { state -> state.progressState }.distinct()
     val totalState = Transformations.map(_state) { state -> state.total }.distinct()
     val businessesState = Transformations.map(_state) { state -> state.businesses }.distinct()
 
     init {
+        _state.update { s -> s.next(Action.SetLoading(context.getString(R.string.fetching_data))) }
         fetchBusinesses()
     }
 
@@ -41,10 +42,9 @@ class HomeViewModel @Inject constructor(
         fetchBusinesses()
     }
 
-    fun isLoading() = loadingInProgress
+    fun isLoading() = _state.value.loadingInProgress
 
-    fun hasLoadedAll() =
-        (_state.value.businesses.isNotEmpty() && _state.value.businesses.size == _state.value.total)
+    fun hasLoadedAll() = _state.value.hasAllLoaded
 
     fun openYelp(business: Business) {
         startActivity(
@@ -98,8 +98,13 @@ class HomeViewModel @Inject constructor(
                 limit = PAGE_LIMIT
             ), Async
         )
-            .doOnSubscribe { loadingInProgress = true }
-            .doOnSuccess { loadingInProgress = false }
+            .doOnSubscribe {
+                _state.update { s -> s.next(Action.SetApiLoadingState(true)) }
+            }
+            .doOnSuccess {
+                _state.update { s -> s.next(Action.ClearLoading) }
+                _state.update { s -> s.next(Action.SetApiLoadingState(false)) }
+            }
             .subscribeBy(
                 onSuccess = {
                     _state.update { s -> s.next(Action.SetTotal(it.total)) }

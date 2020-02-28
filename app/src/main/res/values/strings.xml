@@ -19,6 +19,7 @@
     <string name="error_version_not_supported_update">Update</string>
 
     // Home
+    <string name ="fetching_data">Fetching Data...</string>
     <string name="business_total">Total: %s</string>
 
 </resources>
