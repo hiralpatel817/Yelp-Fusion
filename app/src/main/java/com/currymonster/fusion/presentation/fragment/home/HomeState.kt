@@ -8,9 +8,15 @@ import com.currymonster.fusion.data.Review
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
+/**
+ *  Single Event Actions
+ */
 sealed class Event {
 }
 
+/**
+ *  Reducer Actions
+ */
 sealed class Action {
     data class SetTotal(val total: Int) : Action()
     data class UpdateBusinesses(val businesses: List<Business>) : Action()
@@ -20,6 +26,9 @@ sealed class Action {
     object ClearLoading : Action()
 }
 
+/**
+ *  Progress Reducer (connects to activity to show progress dialogs)
+ */
 object ProgressStateReducer : Reducer<ProgressState> {
     override fun reduce(state: ProgressState, action: Any): ProgressState {
         return when (action) {
@@ -34,6 +43,9 @@ object ProgressStateReducer : Reducer<ProgressState> {
     }
 }
 
+/**
+ *  State holder for home view model
+ */
 @Parcelize
 data class HomeState(
     val progressState: ProgressState = ProgressState(),

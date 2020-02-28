@@ -20,7 +20,6 @@ import io.reactivex.rxkotlin.subscribeBy
 import retrofit2.HttpException
 import javax.inject.Inject
 
-
 class HomeViewModel @Inject constructor(
     val context: Context,
     private val searchUseCase: SearchUseCase,

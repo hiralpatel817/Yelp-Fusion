@@ -40,7 +40,7 @@ class BusinessItem(
         }
     }
 
-    private fun getRatingDrawable(rating: Double) =
+    fun getRatingDrawable(rating: Double) =
         when (rating) {
             0.0, 0.5 ->
                 R.drawable.stars_0
@@ -63,7 +63,7 @@ class BusinessItem(
             5.0 ->
                 R.drawable.stars_5
             else ->
-                R.drawable.stars_0
+                0
         }
 
     private fun setLoadingState(view: View) {
