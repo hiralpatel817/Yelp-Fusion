@@ -14,7 +14,7 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.currymonster.fusion.presentation.activity.intro.IntroActivity">
+        <activity android:name="com.currymonster.fusion.presentation.activity.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -22,10 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name="com.currymonster.fusion.presentation.activity.home.HomeActivity"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

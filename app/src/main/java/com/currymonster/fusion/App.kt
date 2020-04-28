@@ -12,7 +12,7 @@ import com.currymonster.fusion.modules.AppComponent
 import com.currymonster.fusion.modules.AppModule
 import com.currymonster.fusion.modules.DaggerAppComponent
 import com.currymonster.fusion.modules.SessionComponent
-import com.currymonster.fusion.presentation.activity.intro.IntroActivity
+import com.currymonster.fusion.presentation.activity.home.HomeActivity
 import dagger.android.*
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
@@ -60,7 +60,7 @@ open class App : Application(), HasActivityInjector, HasSupportFragmentInjector,
         setSessionComponent()
 
         startActivity(
-            Intent(this, IntroActivity::class.java).apply {
+            Intent(this, HomeActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             }
         )

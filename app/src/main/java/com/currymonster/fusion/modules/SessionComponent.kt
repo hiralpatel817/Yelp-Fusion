@@ -13,9 +13,7 @@ import dagger.Subcomponent
         RepositoryModule::class,
         NetModule::class,
         com.currymonster.fusion.presentation.activity.home.module.Module::class,
-        com.currymonster.fusion.presentation.activity.intro.module.Module::class,
-        com.currymonster.fusion.presentation.fragment.home.module.Module::class,
-        com.currymonster.fusion.presentation.fragment.splash.module.Module::class
+        com.currymonster.fusion.presentation.fragment.home.module.Module::class
     ]
 )
 interface SessionComponent {

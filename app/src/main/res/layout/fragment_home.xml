@@ -6,7 +6,7 @@
     android:background="@color/background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clSubHeader"
+        android:id="@+id/cl_sub_header"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/secondary_background"
@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tvTotal"
+            android:id="@+id/tv_total"
             style="@style/DefaultTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,11 +25,11 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvBusinesses"
+        android:id="@+id/rv_businesses"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingStart="@dimen/content_padding"
         android:paddingEnd="@dimen/content_padding"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clSubHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/cl_sub_header" />
 </androidx.constraintlayout.widget.ConstraintLayout>

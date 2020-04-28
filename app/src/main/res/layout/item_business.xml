@@ -9,37 +9,38 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/content_padding">
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glVert60"
+            android:id="@+id/gl_vert_60"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.60" />
 
         <ImageView
-            android:id="@+id/ivCoverPhoto"
+            android:id="@+id/iv_cover_photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxHeight="200dp"
-            android:scaleType="fitXY"
-            app:layout_constraintEnd_toStartOf="@+id/glVert60"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toStartOf="@+id/gl_vert_60"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabYelpCta"
+            android:id="@+id/fab_yelp_cta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/content_padding_half"
             android:layout_marginBottom="@dimen/content_padding_half"
             android:src="@drawable/yelp_shortcut"
-            app:layout_constraintBottom_toBottomOf="@+id/ivCoverPhoto"
-            app:layout_constraintEnd_toEndOf="@+id/ivCoverPhoto" />
+            app:layout_constraintBottom_toBottomOf="@+id/iv_cover_photo"
+            app:layout_constraintEnd_toEndOf="@+id/iv_cover_photo" />
 
         <TextView
-            android:id="@+id/tvBusinessName"
+            android:id="@+id/tv_business_name"
             style="@style/TitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -47,83 +48,19 @@
             android:layout_marginTop="@dimen/content_padding"
             android:ellipsize="end"
             android:maxLines="1"
-            app:layout_constraintEnd_toStartOf="@+id/glVert60"
+            app:layout_constraintEnd_toStartOf="@+id/gl_vert_60"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivCoverPhoto" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_cover_photo" />
 
         <ImageView
-            android:id="@+id/ivRating"
+            android:id="@+id/iv_rating"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/content_padding"
             android:layout_marginEnd="@dimen/content_padding"
-            app:layout_constraintBottom_toBottomOf="@+id/tvBusinessName"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_business_name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/glVert60"
-            app:layout_constraintTop_toTopOf="@+id/tvBusinessName" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clRatingContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/content_padding"
-            android:layout_marginTop="@dimen/content_padding"
-            android:layout_marginEnd="@dimen/content_padding"
-            android:paddingBottom="@dimen/content_padding"
-            app:layout_constraintTop_toBottomOf="@+id/tvBusinessName">
-
-            <View
-                android:id="@+id/viewDivider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/divider"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ProgressBar
-                android:id="@+id/pbSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viewDivider" />
-
-            <ImageView
-                android:id="@+id/ivUserPhoto"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/content_padding"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viewDivider" />
-
-            <TextView
-                android:id="@+id/tvUserName"
-                style="@style/AuthorTextStyle"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/content_padding"
-                android:layout_marginEnd="@dimen/content_padding"
-                android:gravity="center_vertical"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/ivUserPhoto"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ivUserPhoto"
-                app:layout_constraintTop_toTopOf="@+id/ivUserPhoto" />
-
-            <TextView
-                android:id="@+id/tvUserReview"
-                style="@style/DefaultTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/content_padding"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/ivUserPhoto" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintStart_toEndOf="@+id/gl_vert_60"
+            app:layout_constraintTop_toTopOf="@+id/tv_business_name" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

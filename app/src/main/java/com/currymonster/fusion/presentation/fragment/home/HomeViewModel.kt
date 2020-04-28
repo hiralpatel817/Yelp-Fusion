@@ -13,7 +13,7 @@ import com.currymonster.fusion.interceptors.FusionRxJava2CallAdapterFactory
 import com.currymonster.fusion.presentation.base.BaseMutableLiveData
 import com.currymonster.fusion.presentation.base.BaseViewModel
 import com.currymonster.fusion.presentation.common.Dialogs
-import com.currymonster.fusion.transformer.Async
+import com.currymonster.fusion.common.Async
 import com.currymonster.fusion.usecase.ReviewsUseCase
 import com.currymonster.fusion.usecase.SearchUseCase
 import io.reactivex.rxkotlin.subscribeBy
@@ -22,8 +22,7 @@ import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
     val context: Context,
-    private val searchUseCase: SearchUseCase,
-    private val reviewsUseCase: ReviewsUseCase
+    private val searchUseCase: SearchUseCase
 ) : BaseViewModel() {
 
     private val _state = BaseMutableLiveData(HomeState())
@@ -33,59 +32,17 @@ class HomeViewModel @Inject constructor(
     val businessesState = Transformations.map(_state) { state -> state.businesses }.distinct()
 
     init {
-        _state.update { s -> s.next(Action.SetLoading(context.getString(R.string.fetching_data))) }
         fetchBusinesses()
     }
-
-    fun onLoadMore() {
-        fetchBusinesses()
-    }
-
-    fun isLoading() = _state.value.loadingInProgress
-
-    fun hasLoadedAll() = _state.value.hasAllLoaded
 
     fun openYelp(business: Business) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(business.url)
+        }.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
         startActivity(
-            context,
-            Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse(business.url)
-            },
-            null
+            context, intent, null
         )
-    }
-
-    fun getReviewForBusiness(business: Business): Review? {
-        return _state.value.reviewsMap[business.id]
-    }
-
-    fun getReviewFromServer(
-        business: Business,
-        onLoaded: (review: Review) -> Unit,
-        onError: () -> Unit
-    ) {
-        reviewsUseCase.execute(
-            ReviewsUseCase.Data(
-                business.id
-            ), Async
-        ).subscribeBy(
-            onSuccess = {
-                if (it.reviews.isNotEmpty()) {
-                    _state.update { s ->
-                        s.next(Action.AddReview(business.id, it.reviews[0]))
-                    }
-
-                    onLoaded.invoke(it.reviews[0])
-                } else {
-                    onError.invoke()
-                }
-            },
-            onError = {
-                onError.invoke()
-            }
-        ).also {
-            autoDispose(it)
-        }
     }
 
     private fun fetchBusinesses() {
@@ -98,11 +55,10 @@ class HomeViewModel @Inject constructor(
             ), Async
         )
             .doOnSubscribe {
-                _state.update { s -> s.next(Action.SetApiLoadingState(true)) }
+                _state.update { s -> s.next(Action.SetLoading(context.getString(R.string.fetching_data))) }
             }
             .doOnSuccess {
                 _state.update { s -> s.next(Action.ClearLoading) }
-                _state.update { s -> s.next(Action.SetApiLoadingState(false)) }
             }
             .subscribeBy(
                 onSuccess = {
@@ -110,47 +66,11 @@ class HomeViewModel @Inject constructor(
                     _state.update { s -> s.next(Action.UpdateBusinesses(it.businesses)) }
                 },
                 onError = {
-                    when (it) {
-                        is HttpException -> {
-                            dialogEvent.value =
-                                Dialogs.getGenericNetworkRetryDialog(
-                                    context = context,
-                                    ctaPositive = {
-                                        fetchBusinesses()
-                                    }
-                                )
-                        }
-                        is FusionRxJava2CallAdapterFactory.ServerException -> {
-                            dialogEvent.value =
-                                Dialogs.getGenericNetworkRetryDialog(
-                                    context = context,
-                                    title = it.status,
-                                    description = it.description,
-                                    ctaPositive = {
-                                        fetchBusinesses()
-                                    }
-                                )
-                        }
-
-                        is FusionRxJava2CallAdapterFactory.NetworkException -> {
-                            dialogEvent.value =
-                                Dialogs.getGenericNetworkRetryDialog(
-                                    context = context,
-                                    description = it.description,
-                                    ctaPositive = {
-                                        fetchBusinesses()
-                                    }
-                                )
-                        }
-                        else -> {
-                            dialogEvent.value =
-                                Dialogs.getGenericNetworkDialog(
-                                    context = context,
-                                    ctaPositive = {}
-                                )
-                        }
-
-                    }
+                    dialogEvent.value =
+                        Dialogs.getGenericNetworkDialog(
+                            context = context,
+                            ctaPositive = {}
+                        )
                 }
             ).also {
                 autoDispose(it)

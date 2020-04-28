@@ -7,14 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.currymonster.fusion.R
-import com.currymonster.fusion.extensions.initializeWithLinearLayout
 import com.currymonster.fusion.presentation.base.BaseFragment
 import com.currymonster.fusion.presentation.base.BaseObserver
-import com.currymonster.fusion.presentation.common.PaginationListener
-import com.currymonster.fusion.presentation.items.BusinessItem
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.Section
-import com.xwray.groupie.ViewHolder
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -22,18 +16,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     override val viewModel: HomeViewModel by viewModels { factory }
 
-    private lateinit var groupAdapter: GroupAdapter<ViewHolder>
-    private lateinit var businessesSection: Section
-    private var paginationCallbacks: PaginationListener.Callbacks =
-        object : PaginationListener.Callbacks {
-            override fun onLoadMore() {
-                viewModel.onLoadMore()
-            }
-
-            override fun isLoading() = viewModel.isLoading()
-
-            override fun hasLoadedAllItems() = viewModel.hasLoadedAll()
-        }
+    private lateinit var adapter: BusinessAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidSupportInjection.inject(this)
@@ -51,38 +34,41 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Set up Recycler View using Groupie
-        groupAdapter = GroupAdapter()
-        businessesSection = Section()
-        groupAdapter.add(businessesSection)
+        initializeUI()
+
+        initializeStreams()
+    }
+
+    private fun initializeUI() {
+        // Initialize Adapter
+        adapter =
+            BusinessAdapter(
+                viewModel,
+                emptyList(),
+                context!!
+            )
 
         // Initialize Layout Manager
-        rvBusinesses.initializeWithLinearLayout {
-            adapter = groupAdapter
+        rv_businesses.layoutManager = LinearLayoutManager(this.context!!)
 
-            // Add Pagination capability
-            addOnScrollListener(
-                PaginationListener(
-                    layoutManager = layoutManager as LinearLayoutManager,
-                    callbacks = paginationCallbacks
-                )
-            )
-        }
+        // Link adapter to recycler
+        rv_businesses.adapter = adapter
+    }
 
+    private fun initializeStreams() {
+        // Observe Progress State
         viewModel.progressState.observe(this, BaseObserver { progressState ->
             onProgressStateChanged(progressState)
         })
 
+        // Observe Total Items
         viewModel.totalState.observe(this, BaseObserver { total ->
-            tvTotal.text = String.format(getString(R.string.business_total), total)
+            tv_total.text = String.format(getString(R.string.business_total), total)
         })
 
+        // Observe Business Data
         viewModel.businessesState.observe(this, BaseObserver { businesses ->
-            businessesSection.update(businesses.map {
-                BusinessItem(viewModel, it)
-            })
-
-            rvBusinesses.adapter?.notifyDataSetChanged()
+            adapter.updateBusinesses(businesses)
         })
     }
 }

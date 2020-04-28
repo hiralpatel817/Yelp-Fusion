@@ -6,7 +6,7 @@ import androidx.appcompat.widget.Toolbar
 import com.currymonster.fusion.R
 import com.currymonster.fusion.presentation.base.BaseActivity
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_intro.*
+import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : BaseActivity() {
 
