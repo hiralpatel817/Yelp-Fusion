@@ -22,13 +22,10 @@ open class App : Application(), HasActivityInjector, HasSupportFragmentInjector,
 
     @Inject
     internal lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
-
     @Inject
     internal lateinit var dispatchingFragmentInjector: DispatchingAndroidInjector<Fragment>
-
     @Inject
     internal lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
-
     @Inject
     internal lateinit var dispatchingReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
 
@@ -48,22 +45,8 @@ open class App : Application(), HasActivityInjector, HasSupportFragmentInjector,
             .appModule(AppModule(this))
             .build()
 
-        setSessionComponent()
-    }
-
-    private fun setSessionComponent() {
         sessionComponent = component.sessionComponent().build()
         sessionComponent.inject(this)
-    }
-
-    fun resetApp() {
-        setSessionComponent()
-
-        startActivity(
-            Intent(this, HomeActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-        )
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

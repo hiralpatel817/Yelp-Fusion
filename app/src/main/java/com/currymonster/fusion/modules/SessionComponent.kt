@@ -13,7 +13,7 @@ import dagger.Subcomponent
         RepositoryModule::class,
         NetModule::class,
         com.currymonster.fusion.presentation.activity.home.module.Module::class,
-        com.currymonster.fusion.presentation.fragment.home.module.Module::class
+        com.currymonster.fusion.presentation.fragment.businesslist.module.Module::class
     ]
 )
 interface SessionComponent {

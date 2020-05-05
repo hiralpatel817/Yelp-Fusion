@@ -19,16 +19,4 @@ class EnvManager(
             Environment.default
         }
     }
-
-    fun getEnviorments() =
-        getEnvironment().availableEnvironments.map {
-            it.name
-        }
-
-    fun setEnviorment(env: String) {
-        if (BuildConfig.DEBUG) {
-            preferenceManager.putString(PreferenceManager.KEY_SELECTED_ENV, env)
-            app.resetApp()
-        }
-    }
 }
